@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP&family=Noto+Sans+TC:wght@100..900&display=swap');
+
+/* body不需要用.呼叫 */
+:root {
+
+    /* Brand Colors */
+    --primary-color: #0F2744;
+    /* Deep Legal Navy */
+    --secondary-color: #3A4A5B;
+    /* Slate Blue */
+    --accent-color: #B08D57;
+    /* Professional Gold */
+    --warning-color: #C0392B;
+    /* Legal Alert Red */
+
+    /* Backgrounds */
+    --bg-primary: #FAF9F7;
+    /* Ivory White */
+    --bg-secondary: #F1F3F5;
+    /* Light Gray */
+    --bg-dark: #162235;
+    /* Dark Navy Section */
+    --bg-card: #FFFFFF;
+    /* Cards */
+
+    /* Buttons */
+    --btn-primary-text: #FFFFFF;
+    --btn-primary-bg: #0F2744;
+
+    --btn-secondary-text: #0F2744;
+    --btn-secondary-bg: #E6E9ED;
+
+    --btn-accent-text: #FFFFFF;
+    --btn-accent-bg: #B08D57;
+
+    /* Typography */
+    --title-color: #0B1622;
+    /* Nearly Black */
+    --text-color: #2E3A46;
+    /* Body Text */
+    --text-secondary: #6B7280;
+    /* Muted Text */
+    --text-light: #FFFFFF;
+
+    /* Borders & Dividers */
+    --border-color: #D6DCE2;
+    --divider-color: #E5E7EB;
+
+    /* Status Colors */
+    --success-color: #2D6A4F;
+    --info-color: #1D4E89;
+    --error-color: #B91C1C;
+
+    /* Hover States */
+    --primary-hover: #18375C;
+    --secondary-hover: #4A5E73;
+    --accent-hover: #C29B63;
+
+    /* Shadows */
+    --shadow-light: rgba(15, 39, 68, 0.08);
+    --shadow-medium: rgba(15, 39, 68, 0.15);
+
+
+    /* 字體粗細     */
+}
+
+.fw-100 {
+    font-weight: 100;
+}
+
+.fw-200 {
+    font-weight: 200;
+}
+
+.fw-300 {
+    font-weight: 300;
+}
+
+.fw-400 {
+    font-weight: 400;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.fw-800 {
+    font-weight: 800;
+}
+
+.fw-900 {
+    font-weight: 900;
+}
+
+/* 字體顏色 */
+.btn-primary-text {
+    color: var(--btn-primary-text)
+}
+
+/* 透明捲軸功能 */
+.roller-r {
+    position: relative;
+    /* 讓超出去的部分消失 */
+    overflow: hidden;
+}
+
+.roller-r .roller_box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    /* 玻璃透明感 */
+    background: rgba(255, 255, 255, 0.15);
+
+    /* 柔焦模糊背景 */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(8px);
+
+    /* 玻璃邊框 */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    /* 些微陰影增加立體感 */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    right: -100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: right 0.5s;
+}
+
+.roller-r:hover .roller_box {
+    right: 0;
+}
+
+.roller-l {
+    position: relative;
+    /* 讓超出去的部分消失 */
+    overflow: hidden;
+}
+
+.roller-l .roller_box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    /* 玻璃透明感 */
+    background: rgba(255, 255, 255, 0.15);
+
+    /* 柔焦模糊背景 */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(8px);
+
+    /* 玻璃邊框 */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    /* 些微陰影增加立體感 */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    left: -100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: left 0.5s;
+}
+
+.roller-l:hover .roller_box {
+    left: 0;
+}
+
+.roller-t {
+    position: relative;
+    /* 讓超出去的部分消失 */
+    overflow: hidden;
+}
+
+.roller-t .roller_box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    /* 玻璃透明感 */
+    background: rgba(255, 255, 255, 0.15);
+
+    /* 柔焦模糊背景 */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(8px);
+
+    /* 玻璃邊框 */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    /* 些微陰影增加立體感 */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    top: -100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: top 0.5s;
+}
+
+.roller-t:hover .roller_box {
+    top: 0;
+}
+
+.roller-b {
+    position: relative;
+    /* 讓超出去的部分消失 */
+    overflow: hidden;
+}
+
+.roller-b .roller_box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    /* 玻璃透明感 */
+    background: rgba(255, 255, 255, 0.15);
+
+    /* 柔焦模糊背景 */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(8px);
+
+    /* 玻璃邊框 */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    /* 些微陰影增加立體感 */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    bottom: -100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: bottom 0.5s;
+}
+
+.roller-b:hover .roller_box {
+    bottom: 0;
+}
