@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ch11 表單練習</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+        :root {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+
+            /* 日系低彩度專業系統色調 */
+            --jp-bg-light: #F3F5F4;
+            /* 溫潤極簡灰白底 */
+            --jp-blue-muted: #E6ECE9;
+            /* 莫蘭迪低彩灰綠/藍 */
+            --jp-blue-deep: #22292F;
+            /* 洗鍊炭灰黑 */
+            --jp-blue-text: #5A656B;
+            /* 知性中調藍灰 */
+            --jp-pink-muted: #EADAD8;
+            /* 櫻花暗粉色 */
+            --jp-border: #CAD4D0;
+            /* 工藝細線構造色 */
+            --jp-accent: #A4B2AD;
+            /* 幾何標記專用色 */
+
+            --bs-primary-rgb: 34, 41, 47;
+        }
+
+        body {
+            background-color: var(--jp-bg-light);
+            color: var(--jp-blue-deep);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 👑 主標題客製化：完美移至正中央，維持原有大小與顏色，並優化英文字中軸排版 */
+        .text-bg-primary {
+            background-color: transparent !important;
+            color: var(--jp-blue-deep) !important;
+            text-align: center !important;
+            /* 核心修改：置中對齊 */
+            font-size: 32px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.15em;
+            padding: 0 0 18px 0 !important;
+            margin-top: 20px !important;
+            margin-bottom: 50px !important;
+            border-bottom: 2px solid var(--jp-blue-deep);
+            border-radius: 0px !important;
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+
+        .text-bg-primary::after {
+            content: "PRODUCT REGISTRATION";
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            /* 完美水平居中定位 */
+            font-size: 10px;
+            font-family: 'IBM Plex Sans JP', sans-serif;
+            letter-spacing: 0.2em;
+            /* 稍微拉開字距，更顯內斂大氣 */
+            color: var(--jp-blue-text);
+            font-weight: 400;
+        }
+
+        .text-bg-success {
+            background-color: transparent !important;
+            color: var(--jp-blue-deep) !important;
+            text-align: center !important;
+            /* 同步置中 */
+            font-size: 22px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.1em;
+            padding: 0 0 12px 0 !important;
+            margin-bottom: 30px !important;
+            border-bottom: 1px solid var(--jp-blue-text);
+            border-radius: 0px !important;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid var(--jp-border);
+            border-radius: 2px;
+            /* 日系俐落微直角 */
+            color: var(--jp-blue-deep);
+            background-color: #FFFFFF;
+            font-size: 14px !important;
+            padding: 12px 16px;
+            transition: all 0.25s ease;
+        }
+
+        /* 表單聚焦時的內斂質感微陰影 */
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--jp-blue-deep);
+            box-shadow: 0 8px 20px rgba(34, 41, 47, 0.03);
+            background-color: #FFFFFF;
+        }
+
+        /* Floating Label 文字色彩 */
+        .form-floating>.form-control:focus~label,
+        .form-floating>.form-control:not(:placeholder-shown)~label,
+        .form-floating>.form-select~label {
+            color: var(--jp-blue-text);
+            font-size: 12px;
+        }
+
+        .form-label {
+            color: var(--jp-blue-deep);
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* 開關與核取方塊客製 */
+        .form-check-input {
+            border-color: var(--jp-border);
+            cursor: pointer;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--jp-blue-deep);
+            border-color: var(--jp-blue-deep);
+        }
+
+        .form-check-label {
+            font-size: 14px;
+            color: var(--jp-blue-text);
+            cursor: pointer;
+        }
+
+        /* 👑 按鈕客製：重塑精緻的工藝感，並調整置中版面的對稱配重 */
+        .btn {
+            border-radius: 2px;
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            padding: 11px 32px !important;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* 主要確認按鈕 */
+        .btn-primary {
+            background-color: var(--jp-blue-deep) !important;
+            border-color: var(--jp-blue-deep) !important;
+            color: #FFFFFF !important;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--jp-blue-text) !important;
+            border-color: var(--jp-blue-text) !important;
+            transform: translateY(-1px);
+        }
+
+        /* 取消與次要按鈕 */
+        .btn-secondary {
+            background-color: transparent !important;
+            border-color: var(--jp-border) !important;
+            color: var(--jp-blue-text) !important;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--jp-blue-muted) !important;
+            color: var(--jp-blue-deep) !important;
+            border-color: var(--jp-blue-muted) !important;
+        }
+
+        /* 確認送出按鈕 */
+        .btn-warning {
+            background-color: var(--jp-blue-text) !important;
+            border-color: var(--jp-blue-text) !important;
+            color: #FFFFFF !important;
+        }
+
+        .btn-warning:hover {
+            background-color: var(--jp-blue-deep) !important;
+            border-color: var(--jp-blue-deep) !important;
+            transform: translateY(-1px);
+        }
+
+        /* 👑 驗證訊息柔和調教 */
+        .valid-feedback {
+            color: #5A7365 !important;
+            /* 莫蘭迪苔綠 */
+            font-size: 12px;
+            letter-spacing: 0.05em;
+        }
+
+        .invalid-feedback {
+            color: #A36B65 !important;
+            /* 莫蘭迪櫻桃暗紅 */
+            font-size: 12px;
+            letter-spacing: 0.05em;
+        }
+
+        /* 明細展示區塊樣式調整 */
+        #showmessage h3 {
+            font-size: 14px;
+            color: var(--jp-blue-deep);
+            border-bottom: 1px solid var(--jp-bg-light);
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* 明細卡片 */
+        .shadow-sm {
+            box-shadow: 0 20px 40px rgba(34, 41, 47, 0.03) !important;
+            border-radius: 2px !important;
+            border: 1px solid var(--jp-border) !important;
+            position: relative;
+        }
+
+        /* 彈出快訊 SweetAlert2 極簡化 */
+        .swal2-popup {
+            font-family: inherit !important;
+            border-radius: 2px !important;
+            background: var(--jp-bg-light) !important;
+            border: 1px solid var(--jp-border) !important;
+        }
+
+        .swal2-title {
+            color: var(--jp-blue-deep) !important;
+            font-size: 20px !important;
+            font-weight: 600 !important;
+        }
+
+        .swal2-confirm {
+            background-color: var(--jp-blue-deep) !important;
+            border-radius: 2px !important;
+            font-size: 13px !important;
+            padding: 10px 28px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container pt-5">
+        <div class="display-4 text-bg-primary py-2 mb-4">產品建檔</div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="mb-4 form-floating">
+                    <input type="text" class="form-control form-control-lg" name="" id="pname" placeholder=" ">
+                    <label for="pname" class="form-label">產品名稱（字數1-6）</label>
+                    <div class="valid-feedback">符合字數規定</div>
+                    <div class="invalid-feedback">不符合字數規定</div>
+                </div>
+                <div class="mb-4">
+                    <label for="pnum" class="form-label mb-2">產品數量（1-10）</label>
+                    <input type="number" class="form-control form-control-lg" min="1" max="10" id="pnum">
+                    <div class="valid-feedback">符合數量規定</div>
+                    <div class="invalid-feedback">不符合數量規定</div>
+                </div>
+                <div class="mb-4">
+                    <label for="pstandard" class="form-label mb-2">產品規格</label>
+                    <input type="text" class="form-control form-control-lg" name="" id="pstandard" list="datalistoption"
+                        placeholder="請輸入或選擇規格">
+                    <datalist id="datalistoption">
+                        <option value="去冰">去冰</option>
+                        <option value="無糖">無糖</option>
+                        <option value="散裝">散裝</option>
+                    </datalist>
+                </div>
+                <div class="mb-4">
+                    <label for="pvolume" class="form-label mb-2">產品容量</label>
+                    <select name="" id="pvolume" class="form-select form-select-lg">
+                        <option value="" disabled selected class="text-center">***請選擇容量***</option>
+                        <option value="特大">特大</option>
+                        <option value="大">大</option>
+                        <option value="中">中</option>
+                        <option value="小">小</option>
+                    </select>
+                    <div class="valid-feedback">已選擇容量</div>
+                    <div class="invalid-feedback">請選擇容量</div>
+                </div>
+                <div class="mb-4 form-check form-switch pt-2">
+                    <input type="checkbox" name="" id="pstatus" class="form-check-input" checked>
+                    <label for="pstatus" class="form-check-label fw-600 ps-2" id="pstatus_text">目前狀態：上架</label>
+                </div>
+
+                <div class="mb-4 pt-2">
+                    <div class="form-label mb-2">配料：至少一項</div>
+                    <div id="topping_group" class="is-invalid py-1">
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input topping_item" value="珍珠" id="t1">
+                            <label for="t1" class="form-check-label">珍珠</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input topping_item" value="椰果" id="t2">
+                            <label for="t2" class="form-check-label">椰果</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input topping_item" value="寒天" id="t3">
+                            <label for="t3" class="form-check-label">寒天</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input topping_item" value="愛玉" id="t4">
+                            <label for="t4" class="form-check-label">愛玉</label>
+                        </div>
+                    </div>
+                    <div class="valid-feedback mt-1">配料已選擇</div>
+                    <div class="invalid-feedback mt-1">至少選擇一項配料</div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="form-label mb-2">取貨方式：至少一項</div>
+                    <div id="delivery_group" class="is-invalid py-1">
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input item_delivery" name="delivery" value="外送"
+                                id="d1">
+                            <label for="d1" class="form-check-label">外送</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input item_delivery" name="delivery" value="現場"
+                                id="d2">
+                            <label for="d2" class="form-check-label">現場</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input item_delivery" name="delivery" value="預約"
+                                id="d3">
+                            <label for="d3" class="form-check-label">預約</label>
+                        </div>
+                    </div>
+                    <div class="valid-feedback mt-1">取貨方式已選擇</div>
+                    <div class="invalid-feedback mt-1">至少選擇一種取貨方式</div>
+                </div>
+
+                <div class="text-end mt-5 pt-3">
+                    <button class="btn btn-secondary me-2">取消</button>
+                    <button class="btn btn-primary" id="ok_btn">確認欄位</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="review" class="row mt-5 justify-content-center d-none pb-5">
+            <div class="col-md-6 pt-4">
+                <div class="display-5 text-bg-success py-2 mb-4">產品建檔 — 明細確認</div>
+                <div class="p-4 bg-white shadow-sm mb-4">
+                    <div id="showmessage"></div>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <button id="canel_btn" class="btn btn-secondary w-100">返回修改</button>
+                    </div>
+                    <div class="col-6">
+                        <button id="confirm_btn" class="btn btn-warning w-100">確認送出資料</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        let flag_pname = false;
+        let flag_pnum = false;
+        let flag_pvolume = false;
+        let flag_pstandard = false;
+        let flag_topping = false;
+        let flag_delivery = false;
+        $(function () {
+            // 監聽#pname
+            $("#pname").on("input", function () {
+                let pname = $(this).val().trim();
+
+                if (pname.length >= 1 && pname.length <= 6) {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                    flag_pname = true;
+                } else {
+                    $(this).removeClass("is-valid").addClass("is-invalid");
+                    flag_pname = false;
+                }
+            })
+
+            // 監聽#pnum
+            $("#pnum").on("input", function () {
+                let pnum = Number($(this).val());
+
+                if (pnum >= 1 && pnum <= 10) {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                    flag_pnum = true;
+                } else {
+                    $(this).removeClass("is-valid").addClass("is-invalid");
+                    flag_pnum = false;
+                }
+            })
+
+            // 監聽#pstandard
+            $("#pstandard").on("input", function () {
+                let pstandard = $(this).val().trim();
+
+                if (pstandard.length >= 1 && pstandard.length <= 6) {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                    flag_pstandard = true;
+                } else {
+                    $(this).removeClass("is-valid").addClass("is-invalid");
+                    flag_pstandard = false;
+                }
+            })
+
+            // 監聽.topping_item
+            $(".topping_item").on("change", function () {
+                let count = $(".topping_item:checked").length;
+                if (count > 0) {
+                    $("#topping_group").removeClass("is-invalid").addClass("is-valid");
+                    flag_topping = true;
+                } else {
+                    $("#topping_group").removeClass("is-valid").addClass("is-invalid");
+                    flag_topping = false;
+                }
+            })
+
+            // 監聽.item_delivery
+            $(".item_delivery").on("change", function () {
+                let delivery = $(".item_delivery:checked").val();
+
+                if (delivery != undefined) {
+                    $("#delivery_group").removeClass("is-invalid").addClass("is-valid");
+                    flag_delivery = true;
+                } else {
+                    $("#delivery_group").removeClass("is-valid").addClass("is-invalid");
+                    flag_delivery = false;
+                }
+            })
+
+            // 監聽#pvolume
+            $("#pvolume").on("change", function () {
+                let pvolume = $(this).val().trim();
+                if (pvolume != "") {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                    flag_pvolume = true;
+                } else {
+                    $(this).removeClass("is-valid").addClass("is-invalid");
+                    flag_pvolume = false;
+                }
+            })
+
+            // 監聽#pstatus
+            $("#pstatus").on("change", function () {
+                let pstatus = $(this).prop("checked");
+                if (pstatus) {
+                    $("#pstatus_text").text("目前狀態：上架");
+                } else {
+                    $("#pstatus_text").text("目前狀態：下架");
+                }
+            });
+
+            // 監聽#ok_button
+            $("#ok_btn").on("click", function () {
+                if (flag_pname && flag_pnum && flag_pstandard && flag_pvolume && flag_topping && flag_delivery) {
+                    let pstatus = $("#pstatus").prop("checked") ? "上架" : "下架";
+                    let toppingArray = [];
+                    $(".topping_item:checked").each(function () {
+                        toppingArray.push($(this).val());
+                    });
+
+                    let delivery = $(".item_delivery:checked").val();
+                    let strHTML = `<h3><span>產品名稱</span> <strong>${$("#pname").val()}</strong></h3>
+                                    <h3><span>產品數量</span> <strong>${$("#pnum").val()} 個</strong></h3>
+                                    <h3><span>產品規格</span> <strong>${$("#pstandard").val()}</strong></h3>
+                                    <h3><span>產品容量</span> <strong>${$("#pvolume").val()}</strong></h3>
+                                    <h3><span>目前狀態</span> <strong>${pstatus}</strong></h3>
+                                    <h3><span>加入配料</span> <strong>${toppingArray.join("、")}</strong></h3> 
+                                    <h3><span>取貨方式</span> <strong>${delivery}</strong></h3>`;
+                    $("#review").refresh ? null : $("#review").removeClass("d-none");
+                    $("#showmessage").html(strHTML);
+
+                    $('html, body').animate({
+                        scrollTop: $("#review").offset().top
+                    }, 400);
+                } else {
+                    Swal.fire({
+                        title: "驗證提示",
+                        text: "欄位填寫有誤，請檢查紅色標記欄位。",
+                        icon: "error",
+                        confirmButtonText: "返回修正"
+                    });
+                    $("#review").addClass("d-none");
+                }
+            });
+
+            // 明細確認區域的取消按鈕功能
+            $("#canel_btn").on("click", function () {
+                $("#review").addClass("d-none");
+                $('html, body').animate({ scrollTop: 0 }, 300);
+            });
+        })
+    </script>
+</body>
+
+</html>
