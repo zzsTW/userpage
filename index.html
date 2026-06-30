@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Website</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+        :root {
+            /* AUTOMATIC SYSTEM FONT STACK */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+
+            /* BACKGROUNDS */
+            --bg-primary: #F3F5F4;
+            --bg-secondary: #E3E8E6;
+            --bg-tertiary: #D7DEC9;
+            --bg-card: #FFFFFF;
+
+            /* TYPOGRAPHY */
+            --text-primary: #22292F;
+            --text-secondary: #5A656B;
+            --text-muted: #E6ECE9;
+            --text-light: #8E9A9E;
+
+            /* TITLES*/
+            --title-color: #1A2124;
+            --subtitle-color: #5A656B;
+
+            /* BORDERS */
+            --border-light: #E1E8E5;
+            --border-medium: #CAD4D0;
+            --border-dark: #A4B2AD;
+
+            /* SHADOWS */
+            --shadow-soft: 0 4px 30px rgba(34, 41, 47, 0.02);
+            --shadow-medium: 0 30px 60px rgba(34, 41, 47, 0.08);
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--success);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3 {
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        /* 👑 S01 封面：全新博物館網格「破格與錯位層次」排版 */
+        .s01 {
+            background-color: #F3F5F4;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 背景幾何襯底：重新回歸，提供畫面厚度與結構重量 */
+        .s01 .box01 {
+            width: 44vw;
+            height: 72vh;
+            background-color: var(--text-muted);
+            position: absolute;
+            top: 16vh;
+            right: 6vw;
+            z-index: 1;
+            /* 最底層 */
+            border-radius: 2px;
+        }
+
+        /* 2026 大年份：色調加深、移至中景。刻意往右延伸，使其右側局部被主相片遮擋，製造極限雜誌感 */
+        .s01 .box02 {
+            width: auto;
+            height: auto;
+            background-color: transparent;
+            position: absolute;
+            top: 14vh;
+            left: 8vw;
+            z-index: 2;
+            /* 位於色塊上方、相片下方 */
+            font-family: 'IBM Plex Sans JP', sans-serif;
+            font-size: 13vw;
+            font-weight: 500;
+            color: var(--text-primary);
+            /* 字色調深，強化視覺存在感 */
+            line-height: 1;
+            letter-spacing: -0.04em;
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        .s01 .box02::after {
+            content: "2026";
+        }
+
+        /* 幾何微型裝飾線：左上角極細 L 型工藝定位線 */
+        .s01 .box03 {
+            width: 40px;
+            height: 40px;
+            border-left: 1px solid var(--border-dark);
+            border-top: 1px solid var(--border-dark);
+            position: absolute;
+            top: 6vh;
+            left: 4vw;
+            z-index: 4;
+            opacity: 0.5;
+        }
+
+        /* 幾何微型裝飾線：右下角極細 L 型工藝定位線 */
+        .s01 .box04 {
+            width: 40px;
+            height: 40px;
+            border-right: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+            position: absolute;
+            bottom: 6vh;
+            right: 4vw;
+            z-index: 4;
+            opacity: 0.5;
+        }
+
+        /* 主照片：與底色塊（box01）產生高級的錯位重疊，並壓在 2026 之上 */
+        .s01 .userImg {
+            position: absolute;
+            top: 11vh;
+            bottom: 21vh;
+            right: 10vw;
+            left: 44vw;
+            /* 往右推移，與左側文字區拉開絕對寬裕的距離 */
+            z-index: 3;
+            /* 壓在 box02 2026 的上方 */
+            background-image: url(images/PersonalWebiste/masaaki-komori-14cHwhRKJh8-unsplash.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            border-radius: 0px;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 前景文字區：落於左下方，與上方 2026 產生平衡的高低落差 */
+        .userText {
+            position: absolute;
+            left: 8vw;
+            bottom: 15vh;
+            width: 32vw;
+            z-index: 10;
+            /* 最前景 */
+            text-align: left;
+        }
+
+        .userText h1 {
+            font-size: 42px;
+            margin: 0 0 12px 0;
+            font-weight: 700;
+            color: var(--title-color);
+            letter-spacing: 0.1em;
+        }
+
+        /* 櫻花暗粉色精緻短線 */
+        .userText hr {
+            border: none;
+            border-top: 3px solid var(--error);
+            width: 35px;
+            margin: 0 0 20px 0;
+        }
+
+        .userText h2 {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 0 0 18px 0;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        /* 核心修改：設定固定的容器寬度範圍、自動折行，並與右側圖片保留高度呼吸空間 */
+        .userText p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 2.2;
+            letter-spacing: 0.06em;
+            margin: 0;
+            max-width: 24vw;
+            /* 嚴格限制中文字群的橫向範圍 */
+            word-wrap: break-word;
+            /* 完美斷字折行 */
+            padding-right: 20px;
+        }
+
+        /* ---------------------------------------------------- */
+        /* S02 作品集區塊（完全維持原本卡片格式，未來可直接複製貼上） */
+        /* ---------------------------------------------------- */
+        .s02 {
+            padding: 120px 12%;
+            background-color: var(--text-muted);
+            text-align: left;
+        }
+
+        .s02 h2 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 50px;
+            color: var(--title-color);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        .s02 .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+        }
+
+        .s02 .card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background-color: var(--bg-card);
+            width: 290px;
+            min-height: 170px;
+            padding: 35px 28px;
+            text-align: left;
+            border-radius: 4px;
+            box-sizing: border-box;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .s02 .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-medium);
+            box-shadow: 0 15px 35px rgba(34, 41, 47, 0.05);
+        }
+
+        .s02 .card h3 {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+        }
+
+        .s02 .card p {
+            color: var(--text-light);
+            font-size: 13px;
+            margin: 0 0 24px 0;
+            letter-spacing: 0.05em;
+        }
+
+        .s02 .card a {
+            margin-top: auto;
+            color: var(--text-primary);
+            font-size: 12px;
+            text-decoration: none;
+            font-family: "IBM Plex Sans JP", sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            padding-bottom: 2px;
+            border-bottom: 1px solid var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .s02 .card a:hover {
+            color: var(--text-secondary);
+            border-bottom-color: var(--border-medium);
+            padding-left: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="s01">
+        <div class="box01"></div>
+        <div class="box02"></div>
+        <div class="box03"></div>
+        <div class="box04"></div>
+        <div class="userImg"></div>
+        <div class="userText">
+            <h1>曾子鑫</h1>
+            <hr>
+            <h2>No.9 / DESIGN PORTFOLIO</h2>
+            <p>目的使得一路特別忘記客戶指導人力，次數快速百度堅持鑒定每一個。</p>
+        </div>
+    </section>
+
+    <section class="s02">
+        <h2>Portfolio</h2>
+
+        <div class="card-container">
+            <div class="card">
+                <h3>Drink Order System</h3>
+                <p>202600630</p>
+                <a href="20260630-DrinkOrderSystem-ai.html" target="_blank">MORE</a>
+            </div>
+
+            <div class="card">
+                <h3>購物網站</h3>
+                <p>使用HTML及CSS製作展示頁面。</p>
+                <a href="#">查看更多</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

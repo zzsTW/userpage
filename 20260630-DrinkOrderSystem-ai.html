@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ch11 表單練習</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        /* 注入與前一網頁完全一致的日系低彩度風格設定 */
+        :root {
+            /* 全域字體：自動抓取瀏覽器或作業系統預設優質字型 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+
+            /* 日系低彩度色調定義 */
+            --jp-bg-light: #F4F8FA;
+            /* 輕雲微藍白（全網頁背景） */
+            --jp-blue-muted: #D9E4EC;
+            /* 低彩度晴空藍（主標題、進度條） */
+            --jp-blue-deep: #2D3740;
+            /* 微風炭藍灰（主要文字與主確認按鈕） */
+            --jp-blue-text: #4A5660;
+            /* 知性暮灰藍（次要內文、標籤） */
+            --jp-pink-muted: #EADAD8;
+            /* 洗鍊櫻花粉（確認明細與錯誤反饋提示） */
+            --jp-border: #D9E4EC;
+            /* 輸入框清透邊框 */
+
+            /* 覆寫 Bootstrap 預設的焦點光暈顏色 */
+            --bs-primary-rgb: 45, 55, 64;
+        }
+
+        body {
+            background-color: var(--jp-bg-light);
+            color: var(--jp-blue-deep);
+            font-family: var(--jp-font-stack);
+        }
+
+        /* 1. 主標題客製化：覆寫原本刺眼的 text-bg-primary */
+        .text-bg-primary {
+            background-color: var(--jp-blue-muted) !important;
+            color: var(--jp-blue-deep) !important;
+            letter-spacing: 2px;
+            font-weight: 700 !important;
+            border-radius: 6px;
+        }
+
+        /* 2. 明細標題客製化：將原本的綠色改為優雅的低彩度櫻花粉 */
+        .text-bg-success {
+            background-color: var(--jp-pink-muted) !important;
+            color: var(--jp-blue-deep) !important;
+            letter-spacing: 2px;
+            font-weight: 700 !important;
+        }
+
+        /* 3. 輸入表單客製化（Input, Select, Switch） */
+        .form-control,
+        .form-select {
+            border-color: var(--jp-border);
+            color: var(--jp-blue-deep);
+            background-color: #FFFFFF;
+            font-size: 15px !important;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--jp-blue-text);
+            box-shadow: 0 0 0 0.25rem rgba(74, 86, 96, 0.15);
+            color: var(--jp-blue-deep);
+        }
+
+        .form-label {
+            color: var(--jp-blue-text);
+            font-weight: 500;
+        }
+
+        /* 開關與單選/複選框 */
+        .form-check-input:checked {
+            background-color: var(--jp-blue-deep);
+            border-color: var(--jp-blue-deep);
+        }
+
+        .form-check-input:focus {
+            border-color: var(--jp-blue-text);
+            box-shadow: 0 0 0 0.25rem rgba(74, 86, 96, 0.15);
+        }
+
+        /* 4. 按鈕客製化（主要、次要、警告確認） */
+        .btn-primary {
+            background-color: var(--jp-blue-deep) !important;
+            border-color: var(--jp-blue-deep) !important;
+            color: #FFFFFF !important;
+            padding: 10px 24px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--jp-blue-text) !important;
+            border-color: var(--jp-blue-text) !important;
+        }
+
+        .btn-secondary {
+            background-color: transparent !important;
+            border-color: var(--jp-blue-text) !important;
+            color: var(--jp-blue-text) !important;
+            padding: 10px 24px;
+            font-weight: 600;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(74, 86, 96, 0.08) !important;
+            color: var(--jp-blue-deep) !important;
+        }
+
+        /* 送出確認按鈕（原 btn-warning 改為帶有質感的炭灰底） */
+        .btn-warning {
+            background-color: var(--jp-blue-text) !important;
+            border-color: var(--jp-blue-text) !important;
+            color: #FFFFFF !important;
+            font-weight: 600;
+        }
+
+        .btn-warning:hover {
+            background-color: var(--jp-blue-deep) !important;
+            border-color: var(--jp-blue-deep) !important;
+        }
+
+        /* 5. 驗證反饋訊息客製化（符合/不符合規定提示色調柔和化） */
+        .valid-feedback {
+            color: #5A7365 !important;
+            /* 柔和日系草綠 */
+            font-size: 13px;
+        }
+
+        .invalid-feedback {
+            color: #A36B65 !important;
+            /* 低彩度櫻花暗紅 */
+            font-size: 13px;
+        }
+
+        /* 明細展示區塊樣式調整 */
+        #showmessage h3 {
+            font-size: 16px;
+            color: var(--jp-blue-deep);
+            border-bottom: 1px dashed var(--jp-blue-muted);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        /* 客製化 SweetAlert2 快訊視窗風格（使其符合日系簡約感） */
+        .swal2-popup {
+            font-family: inherit !important;
+            border-radius: 12px !important;
+            background: #FFFFFF !important;
+        }
+
+        .swal2-title {
+            color: var(--jp-blue-deep) !important;
+        }
+
+        .swal2-confirm {
+            background-color: var(--jp-blue-deep) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container pt-5">
+        <div class="display-4 fw-900 text-center text-bg-primary py-2 mb-4">產品建檔</div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="mb-3 form-floating">
+                    <input type="text" class="form-control form-control-lg" name="" id="pname" placeholder="">
+                    <label for="pname" class="form-label">產品名稱（字數1-6）</label>
+                    <div class="valid-feedback">符合字數規定</div>
+                    <div class="invalid-feedback">不符合字數規定</div>
+                </div>
+                <div class="mb-3">
+                    <label for="pnum" class="form-label mb-2">產品數量（1-10）</label>
+                    <input type="number" class="form-control form-control-lg" min="1" max="10" id="pnum">
+                    <div class="valid-feedback">符合數量規定</div>
+                    <div class="invalid-feedback">不符合數量規定</div>
+                </div>
+                <div class="mb-3">
+                    <label for="pstandard" class="form-label mb-2">產品規格</label>
+                    <input type="text" class="form-control form-control-lg" name="" id="pstandard"
+                        list="datalistoption">
+                    <datalist id="datalistoption">
+                        <option value="去冰">去冰</option>
+                        <option value="無糖">無糖</option>
+                        <option value="散裝">散裝</option>
+                    </datalist>
+                </div>
+                <div class="mb-3">
+                    <select name="" id="pvolume" class="form-select form-select-lg">
+                        <option value="" disabled selected class="text-center">***請選擇容量***</option>
+                        <option value="特大">特大</option>
+                        <option value="大">大</option>
+                        <option value="中">中</option>
+                        <option value="小">小</option>
+                    </select>
+                    <div class="valid-feedback">已選擇容量</div>
+                    <div class="invalid-feedback">請選擇容量</div>
+                </div>
+                <div class="mb-4 form-check form-switch">
+                    <input type="checkbox" name="" id="pstatus" class="form-check-input" checked>
+                    <label for="" class="form-check-label" id="pstatus_text">目前狀態：上架</label>
+                </div>
+
+                <div class="mb-4">
+                    <div class="form-label fw-900 mb-2">配料：至少一項</div>
+                    <div id="topping_group" class="is-invalid">
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input topping_item" value="珍珠" id="t1">
+                            <label for="t1" class="form-check-label">珍珠</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input topping_item" value="椰果" id="t2">
+                            <label for="t2" class="form-check-label">椰果</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input topping_item" value="寒天" id="t3">
+                            <label for="t3" class="form-check-label">寒天</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input topping_item" value="愛玉" id="t4">
+                            <label for="t4" class="form-check-label">愛玉</label>
+                        </div>
+                    </div>
+                    <div class="valid-feedback mt-1">配料已選擇</div>
+                    <div class="invalid-feedback mt-1">至少選擇一項配料</div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="form-label fw-900 mb-2">取貨方式：至少一項</div>
+                    <div id="delivery_group" class="is-invalid">
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input item_delivery" name="delivery" value="外送"
+                                id="d1">
+                            <label for="d1" class="form-check-label">外送</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input item_delivery" name="delivery" value="現場"
+                                id="d2">
+                            <label for="d2" class="form-check-label">現場</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input item_delivery" name="delivery" value="預約"
+                                id="d3">
+                            <label for="d3" class="form-check-label">預約</label>
+                        </div>
+                    </div>
+                    <div class="valid-feedback mt-1">取貨方式已選擇</div>
+                    <div class="invalid-feedback mt-1">至少選擇一種取貨方式</div>
+                </div>
+
+                <div class="text-end mt-4">
+                    <button class="btn btn-secondary me-2">取消</button>
+                    <button class="btn btn-primary" id="ok_btn">確認</button>
+                </div>
+            </div>
+        </div>
+        <div id="review" class="row mt-5 justify-content-center d-none pb-5">
+            <div class="col-md-6">
+                <div class="display-5 fw-900 text-center text-bg-success py-2 rounded-3 mb-4">產品建檔—明細確認</div>
+                <div class="p-4 bg-white rounded-3 shadow-sm border border-light mb-3">
+                    <div id="showmessage"></div>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <button id="canel_btn" class="btn btn-secondary w-100">取消</button>
+                    </div>
+                    <div class="col-6">
+                        <button id="confirm_btn" class="btn btn-warning w-100">確認送出</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        let flag_pname = false;
+        let flag_pnum = false;
+        let flag_pvolume = false;
+        let flag_pstandard = false;
+        let flag_topping = false;
+        let flag_delivery = false;
+        $(function () {
+            // 監聽#pname
+            $("#pname").on("input", function () {
+                let pname = $(this).val().trim();
+
+                if (pname.length >= 1 && pname.length <= 6) {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                    flag_pname = true;
+                } else {
+                    $(this).removeClass("is-valid").addClass("is-invalid");
+                    flag_pname = false;
+                }
+            })
+
+            // 監聽#pnum
+            $("#pnum").on("input", function () {
+                let pnum = Number($(this).val());
+
+                if (pnum >= 1 && pnum <= 10) {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                    flag_pnum = true;
+                } else {
+                    $(this).removeClass("is-valid").addClass("is-invalid");
+                    flag_pnum = false;
+                }
+            })
+
+            // 監聽#pstandard
+            $("#pstandard").on("input", function () {
+                let pstandard = $(this).val().trim();
+
+                if (pstandard.length >= 1 && pstandard.length <= 6) {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                    flag_pstandard = true;
+                } else {
+                    $(this).removeClass("is-valid").addClass("is-invalid");
+                    flag_pstandard = false;
+                }
+            })
+
+            // 監聽.topping_item
+            $(".topping_item").on("change", function () {
+                let count = $(".topping_item:checked").length;
+                if (count > 0) {
+                    $("#topping_group").removeClass("is-invalid").addClass("is-valid");
+                    flag_topping = true;
+                } else {
+                    $("#topping_group").removeClass("is-valid").addClass("is-invalid");
+                    flag_topping = false;
+                }
+            })
+
+            // 監聽.item_delivery
+            $(".item_delivery").on("change", function () {
+                let delivery = $(".item_delivery:checked").val();
+
+                if (delivery != undefined) {
+                    $("#delivery_group").removeClass("is-invalid").addClass("is-valid");
+                    flag_delivery = true;
+                } else {
+                    $("#delivery_group").removeClass("is-valid").addClass("is-invalid");
+                    flag_delivery = false;
+                }
+            })
+
+            // 監聽#pvolume
+            $("#pvolume").on("change", function () {
+                let pvolume = $(this).val().trim();
+                if (pvolume != "") {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                    flag_pvolume = true;
+                } else {
+                    $(this).removeClass("is-valid").addClass("is-invalid");
+                    flag_pvolume = false;
+                }
+            })
+
+            // 監聽#pstatus
+            $("#pstatus").on("change", function () {
+                let pstatus = $(this).prop("checked");
+                if (pstatus) {
+                    $("#pstatus_text").text("目前狀態：上架");
+                } else {
+                    $("#pstatus_text").text("目前狀態：下架");
+                }
+            });
+
+            // 監聽#ok_button
+            $("#ok_btn").on("click", function () {
+                if (flag_pname && flag_pnum && flag_pstandard && flag_pvolume && flag_topping && flag_delivery) {
+                    let pstatus = $("#pstatus").prop("checked") ? "上架" : "下架";
+                    let toppingArray = [];
+                    $(".topping_item:checked").each(function () {
+                        toppingArray.push($(this).val());
+                    });
+
+                    let delivery = $(".item_delivery:checked").val();
+                    let strHTML = `<h3>產品名稱：${$("#pname").val()}</h3>
+                                    <h3>產品數量：${$("#pnum").val()}</h3>
+                                    <h3>產品規格：${$("#pstandard").val()}</h3>
+                                    <h3>產品容量：${$("#pvolume").val()}</h3>
+                                    <h3>目前狀態：${pstatus}</h3>
+                                    <h3>加入配料：${toppingArray.join("、")}</h3> 
+                                    <h3>取貨方式：${delivery}</h3>`;
+                    $("#review").refresh ? null : $("#review").removeClass("d-none");
+                    $("#showmessage").html(strHTML);
+
+                    // 順暢滾動到確認明細畫面
+                    $('html, body').animate({
+                        scrollTop: $("#review").offset().top
+                    }, 400);
+                } else {
+                    Swal.fire({
+                        title: "提示",
+                        text: "欄位填寫有誤，請檢查紅色標記欄位",
+                        icon: "error",
+                        confirmButtonText: "返回修正"
+                    });
+                    $("#review").addClass("d-none");
+                }
+            });
+
+            // 明細確認區域的取消按鈕功能
+            $("#canel_btn").on("click", function () {
+                $("#review").addClass("d-none");
+                $('html, body').animate({ scrollTop: 0 }, 300);
+            });
+        })
+    </script>
+</body>
+
+</html>
